@@ -46,6 +46,7 @@
 <script>
 import { ref } from 'vue';
 import range from 'python-range';
+import Swal from 'sweetalert2';
 
 export default {
     setup() {
@@ -69,7 +70,21 @@ export default {
                     total = total + horaNormal
                 }
             }
-            alert(`Cobras $ ${total.toFixed(2)}`)
+            total > 5000 ? Swal.fire({
+                title: `COBRAS $${total.toFixed(2)}`,
+                text: 'Juegan esos red bull que vos sabes ;)',
+                imageUrl: 'https://i.ytimg.com/vi/_Qn36DvJpa8/maxresdefault.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'a casa platita',
+            }) : Swal.fire({
+                title: `No queres saber la miseria que estas cobrando pa`,
+                text: `$${total.toFixed(2)}, te alcanzan los puchos.`,
+                imageUrl: 'https://elcomercio.pe/resizer/FgjS_snsl39BmZ23FjKysadmE1E=/1200x1200/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/VFYPAIIFTZG4VE342MH634H43I.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: "platitan't",
+            })
 
         }
         const onSubmit = () => {

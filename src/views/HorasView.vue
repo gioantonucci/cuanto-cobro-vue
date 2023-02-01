@@ -16,7 +16,7 @@
           <label for="extras">Y horas extras?</label>
           <input v-model="extras" ref="extras.value" type="number" id="extras">
         </div>
-        <button @click="onSubmit()">Calcular</button>
+        <button @click="montoHoras()">Calcular</button>
       </form>
     </div>
   </div>
@@ -24,7 +24,7 @@
 
 <script>
 import { ref } from 'vue';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 export default {
 
@@ -39,8 +39,8 @@ export default {
       const montoFeriado = montoNormal * 2;
       const montoNocturnas = montoNormal * 1.08;
       let totalHoras = (enMano.value ? enMano.value : 0) + (montoNormal * horas.value) + (montoFeriado * extras.value) + (montoNocturnas * nocturnas.value)
-      
-      
+
+
       totalHoras > 5000 ? Swal.fire({
         title: `COBRAS $${totalHoras.toFixed(2)}`,
         text: 'Juegan esos red bull que vos sabes ;)',
@@ -58,15 +58,7 @@ export default {
       })
       return totalHoras
     }
-
-
-
-    const onSubmit = () => {
-      montoHoras()
-    }
-
     return {
-      onSubmit,
       montoHoras,
       horas,
       enMano,
@@ -81,39 +73,31 @@ export default {
   display: grid;
   place-items: center;
 }
-
 .form-container {
   display: grid;
   grid-template-rows: auto 1fr auto;
   width: 300px;
 }
-
 h1 {
   font-size: 28px;
   color: #fff;
 }
-
 .form {
   display: flex;
   flex-direction: column;
   height: 100%;
   justify-content: space-between;
 }
-
 .form div {
   display: flex;
   flex-direction: column;
-
 }
-
 label {
-
   color: #fff;
   font-size: 14px;
   font-weight: bold;
   margin-bottom: 4px;
 }
-
 input,
 select {
   border: none;
@@ -125,14 +109,10 @@ select {
   border-radius: 8px;
   margin-bottom: 12px;
   transition: 0.4s;
-
   &:focus {
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2)
   }
 }
-
-
-
 button {
   background-color: #42b883;
   border: none;
@@ -145,7 +125,6 @@ button {
   cursor: pointer;
   margin-top: 30px;
   font-family: "Open Sans", sans-serif;
-
   &:active {
     background-color: #3b8070;
   }
