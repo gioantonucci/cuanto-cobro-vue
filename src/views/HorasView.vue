@@ -34,13 +34,12 @@ export default {
     let nocturnas = ref('')
 
     const montoHoras = () => {
-      const normal = 668.44;
-      const feriado = normal * 2;
-      const nocturnas = normal * 1.08;
+      const montoNormal = 668.44;
+      const montoFeriado = montoNormal * 2;
+      const montoNocturnas = montoNormal * 1.08;
 
-      let totalHoras = (enMano.value ? enMano.value : 0) + (normal * horas.value) + (feriado * extras.value) + (nocturnas * nocturnas.value)
-      totalHoras.toFixed(2)
-      alert(`Cobras $ ${totalHoras}`)
+      let totalHoras = (enMano.value ? enMano.value : 0) + (montoNormal * horas.value) + (montoFeriado * extras.value) + (montoNocturnas * nocturnas.value)
+      alert(`Cobras $ ${ totalHoras.toFixed(2)}`)
       return totalHoras
     }
     const onSubmit = () => {

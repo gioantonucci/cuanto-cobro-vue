@@ -4,26 +4,36 @@
             <h1 class="title">Cuánto cobras hoy?</h1>
             <form class="form" @submit.prevent>
                 <div>
-                    <label>Que día es hoy?</label>
-                    <select><option>
-                        Lunes
-                    </option><option>
-                        Martes
-                    </option><option>
-                        Miércoles
-                    </option><option>
-                        Jueves
-                    </option><option>
-                        Viernes
-                    </option><option>
-                        Sábado
-                    </option><option>
-                        Domingo
-                    </option></select>
+                    <label for="dia">Que día es hoy?</label>
+                    <select v-model="dia" id="dia" ref="dia.value" name="dia">
+                        <option ref="dia.value">
+                            Lunes
+                        </option>
+                        <option ref="dia.value">
+                            Martes
+                        </option>
+                        <option ref="dia.value">
+                            Miércoles
+                        </option>
+                        <option ref="dia.value">
+                            Jueves
+                        </option>
+                        <option ref="dia.value">
+                            Viernes
+                        </option>
+                        <option ref="dia.value">
+                            Sábado
+                        </option>
+                        <option ref="dia.value">
+                            Domingo
+                        </option>
+                    </select>
                     <label for="entrada">Entrada:</label>
-                    <input v-model="entrada" type="number" id="entrada" ref="entrada.value" name="entrada" min="00" max="24">
+                    <input v-model="entrada" type="number" id="entrada" ref="entrada.value" name="entrada" min="00"
+                        max="24">
                     <label for="salida">Salida:</label>
-                    <input v-model="salida" type="number" id="salida" ref="salida.value" name="salida" min="00" max="24">
+                    <input v-model="salida" type="number" id="salida" ref="salida.value" name="salida" min="00"
+                        max="24">
                     <label for="enMano">Cuánto cobraste en mano?</label>
                     <input v-model="enMano" ref="enMano.value" type="number" id="enMano">
                     <label>Es feriado?</label><input type="checkbox">
@@ -44,38 +54,30 @@ export default {
         let extras = ref('')
         let entrada = ref('')
         let salida = ref('')
+        //let dia = ref('')
+
         const calculoHoras = () => {
             const horaNormal = 668.44;
             const horaExtra = horaNormal * 1.08;
             let horas = [...range(entrada.value, salida.value + 1)]
             let total = 0
+
             for (let i = 0; i < horas.length; i++) {
                 if (horas[i] >= 22 || horas[i] <= 6) {
                     total = total + horaExtra
                 } else {
                     total = total + horaNormal
                 }
-
             }
-            console.log(total.toFixed(2))
-        }
-        const montoHoras = () => {
-            const normal = 668.44;
-            const feriado = normal * 2;
-            //const nocturnas = normal * 1.08;
-            let totalHoras = (enMano.value ? enMano.value : 0) + (normal * horas.value) + (feriado * extras.value)
-            totalHoras.toFixed(2)
-            alert(`Cobras $ ${totalHoras}`)
-            return totalHoras
+            alert(`Cobras $ ${total.toFixed(2)}`)
+
         }
         const onSubmit = () => {
-            montoHoras()
             calculoHoras()
         }
 
         return {
             onSubmit,
-            montoHoras,
             calculoHoras,
             horas,
             enMano,
@@ -124,7 +126,8 @@ label {
     margin-bottom: 4px;
 }
 
-input, select {
+input,
+select {
     border: none;
     outline: none;
     color: #fff;
