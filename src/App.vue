@@ -17,6 +17,7 @@
 body {
   margin: 0;
   background-color: #35495E ;
+  font-family: "Open Sans", sans-serif;
 }
 nav {
   padding: 30px;

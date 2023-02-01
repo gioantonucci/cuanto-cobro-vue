@@ -24,9 +24,10 @@
 
 <script>
 import { ref } from 'vue';
-
+import Swal from 'sweetalert2'
 
 export default {
+
   setup() {
     let horas = ref('')
     let enMano = ref('')
@@ -37,11 +38,29 @@ export default {
       const montoNormal = 668.44;
       const montoFeriado = montoNormal * 2;
       const montoNocturnas = montoNormal * 1.08;
-
       let totalHoras = (enMano.value ? enMano.value : 0) + (montoNormal * horas.value) + (montoFeriado * extras.value) + (montoNocturnas * nocturnas.value)
-      alert(`Cobras $ ${ totalHoras.toFixed(2)}`)
+      
+      
+      totalHoras > 5000 ? Swal.fire({
+        title: `COBRAS $${totalHoras}`,
+        text: 'Eaaaaaaa',
+        imageUrl: 'https://i.ytimg.com/vi/_Qn36DvJpa8/maxresdefault.jpg',
+        imageWidth: 400,
+        imageHeight: 200,
+        imageAlt: 'a casa platita',
+      }) : Swal.fire({
+        title: `No queres saber la miseria que estas cobrando pa`,
+        text: `$${totalHoras}, te alcanzan los puchos.`,
+        imageUrl: 'https://elcomercio.pe/resizer/FgjS_snsl39BmZ23FjKysadmE1E=/1200x1200/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/VFYPAIIFTZG4VE342MH634H43I.jpg',
+        imageWidth: 400,
+        imageHeight: 200,
+        imageAlt: "platitan't",
+      })
       return totalHoras
     }
+
+
+
     const onSubmit = () => {
       montoHoras()
     }
@@ -118,13 +137,14 @@ button {
   background-color: #42b883;
   border: none;
   border-radius: 8px;
-  font-size: var(--md);
+  font-size: 16px;
   font-weight: bold;
   height: 50px;
   color: #fff;
   width: 100%;
   cursor: pointer;
   margin-top: 30px;
+  font-family: "Open Sans", sans-serif;
 
   &:active {
     background-color: #3b8070;
