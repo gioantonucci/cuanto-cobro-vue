@@ -5,26 +5,26 @@
             <form class="form" @submit.prevent>
                 <div>
                     <label for="dia">Que día es hoy?</label>
-                    <select v-model="dia" id="dia" ref="dia.value" name="dia">
-                        <option ref="dia.value">
+                    <select v-model="dia" id="dia" name="dia">
+                        <option id="Lunes" ref="dia.value" value="Lunes">
                             Lunes
                         </option>
-                        <option ref="dia.value">
+                        <option id="Martes" ref="dia.value" value="Martes">
                             Martes
                         </option>
-                        <option ref="dia.value">
+                        <option id="Miércoles" ref="dia.value" value="Miércoles">
                             Miércoles
                         </option>
-                        <option ref="dia.value">
+                        <option id="Jueves" ref="dia.value" value="Jueves">
                             Jueves
                         </option>
-                        <option ref="dia.value">
+                        <option id="Viernes" ref="dia.value" value="Viernes">
                             Viernes
                         </option>
-                        <option ref="dia.value">
+                        <option id="Sábado" ref="dia.value" value="Sábado">
                             Sábado
                         </option>
-                        <option ref="dia.value">
+                        <option id="Domingo" ref="dia.value" value="Domingo">
                             Domingo
                         </option>
                     </select>
@@ -49,19 +49,22 @@ import range from 'python-range';
 import Swal from 'sweetalert2';
 
 export default {
+
     setup() {
         let horas = ref('')
         let enMano = ref('')
         let extras = ref('')
         let entrada = ref('')
         let salida = ref('')
-        //let dia = ref('')
+        let dia = ref('')
 
         const calculoHoras = () => {
             const horaNormal = 668.44;
             const horaExtra = horaNormal * 1.08;
             let horas = [...range(entrada.value, salida.value + 1)]
             let total = 0
+
+            console.log(dia.value);
 
             for (let i = 0; i < horas.length; i++) {
                 if (horas[i] >= 22 || horas[i] <= 6) {
@@ -98,7 +101,8 @@ export default {
             enMano,
             extras,
             entrada,
-            salida
+            salida,
+            dia
         }
     }
 }

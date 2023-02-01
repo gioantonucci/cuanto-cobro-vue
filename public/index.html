@@ -10,6 +10,18 @@
       href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;700&display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css"
+      rel="stylesheet"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
+    />
     <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
     <title>ABER CUANTO COBRO</title>
   </head>
@@ -22,6 +34,13 @@
       >
     </noscript>
     <div id="app"></div>
-    <!-- built files will be auto injected -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script>
+      new Vue({
+        el: "#app",
+        vuetify: new Vuetify(),
+      });
+    </script>
   </body>
 </html>
