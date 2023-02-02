@@ -39,15 +39,13 @@ export default {
 
       totalHoras > 5000 ? Swal.fire({
         title: `COBRAS $${totalHoras.toFixed(2)}`,
-        text: 'Juegan esos red bull que vos sabes ;)',
-        imageUrl: 'https://i.ytimg.com/vi/_Qn36DvJpa8/maxresdefault.jpg',
+        imageUrl: 'https://www.meme-arsenal.com/memes/085cd1500fedd1460640a5d6721feba2.jpg',
         imageWidth: 400,
         imageHeight: 200,
         imageAlt: 'a casa platita',
       }) : Swal.fire({
-        title: `No queres saber la miseria que estas cobrando pa`,
-        text: `$${totalHoras.toFixed(2)}, te alcanzan los puchos.`,
-        imageUrl: 'https://elcomercio.pe/resizer/FgjS_snsl39BmZ23FjKysadmE1E=/1200x1200/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/VFYPAIIFTZG4VE342MH634H43I.jpg',
+        title: `COBRAS $${totalHoras.toFixed(2)}`,
+        imageUrl: 'https://www.fotosdememes.com/wp-content/uploads/2021/08/Acaso-crees-que-somos-ricos-1024x597.jpg.webp',
         imageWidth: 400,
         imageHeight: 200,
         imageAlt: "platitan't",
