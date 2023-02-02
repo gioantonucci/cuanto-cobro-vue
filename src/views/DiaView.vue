@@ -30,17 +30,18 @@ export default {
         let feriado = ref()
 
         const calculoHoras = () => {
+            //defino montos
             const montoNormal = 668.44;
             const montoNocturnas = montoNormal * 1.08;
-
+            //manipulo el input de hora y fecha y me quedo solamente con la hora
             let start = DateTime.fromISO(entrada.value);
             let end = DateTime.fromISO(salida.value);
             let diffInHours = end.diff(start, 'hours');
             let horasTrabajadas = diffInHours.values.hours
-
+            //guardo la hora de entrada y defino la cantidad de horas trabajadas
             let horaEntrada = start.c.hour;
             let horasTotales = horaEntrada + horasTrabajadas;
-
+            //funcion para determinar un rango entre 2 numeros, en este caso, de entrada y salida
             function range(start, stop) {
                 let totales = [];
                 for (let i = start; i < (stop + 1); i++) {
@@ -48,23 +49,40 @@ export default {
                 }
                 return totales;
             }
-            let pagoTotal = 0
 
+            //declaro la variable del total
+            let pagoTotal = 0
+            //creo un array con la cantidad de horas trabajadas a partir del ingreso
             let arrHoras = range(horaEntrada, horasTotales)
-            for (let i = 0; i < arrHoras.length; i++) {
-                if (arrHoras[i] < 22) {
-                    pagoTotal = pagoTotal + montoNormal
+            console.log(horasTrabajadas)
+            console.log(arrHoras)
+            console.log(arrHoras.length - 1)
+            /**
+             * Teniendo en cuenta que de 22 a 6 am se computan horas nocturnas, recorro el array
+             * de horas trabajadas. Como no se puede pasar de 24 a 00, tomé el 25 como 00 y continué el bucle.
+             * Si la hora es menor que 22 o mayor que 30 (explicado abajo), se suma una hora normal.
+             * Si la hora es mayor o igual que 22 y menor o igual que 29, se paga nocturna.
+             * (Usé 29 porque contando desde 22 a 29, 29 equivale a las 5 am que es la última hora que se paga nocturna)
+             * 
+             */
+            for (let i = 0; i < arrHoras.length-1 ; i++) {
+                if (arrHoras[i] < 22 || arrHoras[i] > 30) {
                     if (start.weekdayLong == 'domingo' || feriado.value == true) {
-                        pagoTotal * 2
+                        pagoTotal = pagoTotal + (montoNormal * 2)
                     } else
-                        pagoTotal
+                        pagoTotal = pagoTotal + montoNormal
                 } else if
-                    (arrHoras[i] >= 22 || arrHoras[i] <= 40) {
-                    pagoTotal = pagoTotal + montoNocturnas
-                    if (end.weekdayLong == 'domingo') {
-                        pagoTotal * 2
+                    (arrHoras[i] >= 22 && arrHoras[i] <= 25) {
+                    if (start.weekdayLong == 'domingo') {
+                        pagoTotal = pagoTotal + (montoNocturnas * 2)
                     } else
-                        pagoTotal
+                        pagoTotal = pagoTotal + montoNocturnas
+                } else if 
+                    (arrHoras[i] < 25 && arrHoras[i] > 29) {
+                    if (end.weekdayLong == 'domingo') {
+                        pagoTotal = pagoTotal + (montoNocturnas * 2)
+                    } else
+                        pagoTotal = pagoTotal + montoNocturnas
                 }
             }
 
