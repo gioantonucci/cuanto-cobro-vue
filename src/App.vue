@@ -1,10 +1,10 @@
 <template>
   <nav>
-    <router-link to="/">Home</router-link> | 
     <router-link to="/por-dia">Por día</router-link> |
+    <router-link to="/">Home</router-link> |
     <router-link to="/por-hora">Por hora</router-link>
   </nav>
-  <router-view/>
+  <router-view />
 </template>
 
 <style lang="scss">
@@ -15,11 +15,13 @@
   text-align: center;
   color: #2c3e50;
 }
+
 body {
   margin: 0;
-  background-color: #35495E ;
+  background-color: #35495E;
   font-family: "Open Sans", sans-serif;
 }
+
 nav {
   padding: 30px;
 

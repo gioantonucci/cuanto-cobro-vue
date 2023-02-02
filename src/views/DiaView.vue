@@ -4,105 +4,85 @@
             <h1 class="title">Cuánto cobras hoy?</h1>
             <form class="form" @submit.prevent>
                 <div>
-                    <label for="dia">Que día es hoy?</label>
-                    <select v-model="dia" id="dia" name="dia">
-                        <option id="Lunes" ref="dia.value" value="Lunes">
-                            Lunes
-                        </option>
-                        <option id="Martes" ref="dia.value" value="Martes">
-                            Martes
-                        </option>
-                        <option id="Miércoles" ref="dia.value" value="Miércoles">
-                            Miércoles
-                        </option>
-                        <option id="Jueves" ref="dia.value" value="Jueves">
-                            Jueves
-                        </option>
-                        <option id="Viernes" ref="dia.value" value="Viernes">
-                            Viernes
-                        </option>
-                        <option id="Sábado" ref="dia.value" value="Sábado">
-                            Sábado
-                        </option>
-                        <option id="Domingo" ref="dia.value" value="Domingo">
-                            Domingo
-                        </option>
-                    </select>
                     <label for="entrada">Entrada:</label>
-                    <input v-model="entrada" type="number" id="entrada" ref="entrada.value" name="entrada" min="00"
-                        max="24">
+                    <input v-model="entrada" type="datetime-local" id="entrada" ref="entrada.value" name="entrada"
+                        required>
                     <label for="salida">Salida:</label>
-                    <input v-model="salida" type="number" id="salida" ref="salida.value" name="salida" min="00"
-                        max="24">
-                    <label for="enMano">Cuánto cobraste en mano?</label>
-                    <input v-model="enMano" ref="enMano.value" type="number" id="enMano">
-                    <label>Es feriado?</label><input type="checkbox">
+                    <input v-model="salida" type="datetime-local" id="salida" ref="salida.value" name="salida" required>
+                    <label>Es feriado?</label><input type="checkbox" v-model="feriado" class="feriado" id="feriado"
+                        ref="feriado.value">
                 </div>
-                <button @click="onSubmit()">Calcular</button>
+                <button @click="calculoHoras()">Calcular</button>
             </form>
         </div>
     </div>
 </template>
 <script>
+
 import { ref } from 'vue';
-import range from 'python-range';
 import Swal from 'sweetalert2';
+const { DateTime } = require("luxon");
 
 export default {
-
     setup() {
-        let horas = ref('')
-        let enMano = ref('')
-        let extras = ref('')
         let entrada = ref('')
         let salida = ref('')
-        let dia = ref('')
+        let feriado = ref()
 
         const calculoHoras = () => {
-            const horaNormal = 668.44;
-            const horaExtra = horaNormal * 1.08;
-            let horas = [...range(entrada.value, salida.value + 1)]
-            let total = 0
+            const montoNormal = 668.44;
+            const montoNocturnas = montoNormal * 1.08;
 
-            console.log(dia.value);
+            let start = DateTime.fromISO(entrada.value);
+            let end = DateTime.fromISO(salida.value);
+            let diffInHours = end.diff(start, 'hours');
+            let horasTrabajadas = diffInHours.values.hours
+            console.log('horas', horasTrabajadas);
 
-            for (let i = 0; i < horas.length; i++) {
-                if (horas[i] >= 22 || horas[i] <= 6) {
-                    total = total + horaExtra
-                } else {
-                    total = total + horaNormal
+            let horaEntrada = start.c.hour;
+            let horasTotales = horaEntrada + horasTrabajadas;
+
+            console.log(feriado.value)
+            
+            function range(start, stop) {
+                let totales = [];
+                for (let i = start; i < (stop + 1); i++) {
+                    totales.push(i);
                 }
+                return totales;
             }
-            total > 5000 ? Swal.fire({
-                title: `COBRAS $${total.toFixed(2)}`,
-                text: 'Juegan esos red bull que vos sabes ;)',
+            let pagoTotal = 0
+            let arrHoras = range(horaEntrada, horasTotales)
+            for (let i = 0; i < arrHoras.length; i++) {
+                if (arrHoras[i] < 22) {
+                    pagoTotal = pagoTotal + montoNormal
+                    start.weekdayLong == 'domingo' || feriado.value  == true ? pagoTotal * 2 : pagoTotal
+                } else if
+                    (arrHoras[i] >= 22 || arrHoras[i] <= 40) {
+                    pagoTotal = pagoTotal + montoNocturnas
+                    end.weekdayLong == 'domingo' || feriado.value == true ? pagoTotal * 2 : pagoTotal
+                }
+            } console.log(pagoTotal);
+
+            pagoTotal > 5000 ? Swal.fire({
+                title: `COBRAS $${pagoTotal.toFixed(2)}`,
                 imageUrl: 'https://i.ytimg.com/vi/_Qn36DvJpa8/maxresdefault.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'a casa platita',
             }) : Swal.fire({
-                title: `No queres saber la miseria que estas cobrando pa`,
-                text: `$${total.toFixed(2)}, te alcanzan los puchos.`,
+                title: `COBRAS $${pagoTotal.toFixed(2)}`,
                 imageUrl: 'https://elcomercio.pe/resizer/FgjS_snsl39BmZ23FjKysadmE1E=/1200x1200/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/VFYPAIIFTZG4VE342MH634H43I.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: "platitan't",
             })
-
         }
-        const onSubmit = () => {
-            calculoHoras()
-        }
-
         return {
-            onSubmit,
             calculoHoras,
-            horas,
-            enMano,
-            extras,
             entrada,
+            feriado,
             salida,
-            dia
         }
     }
 }
@@ -134,19 +114,22 @@ h1 {
 .form div {
     display: flex;
     flex-direction: column;
+    margin-top: 10px;
+}
 
+.check {
+    display: flex;
+    align-items: center;
 }
 
 label {
-
     color: #fff;
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 4px;
 }
 
-input,
-select {
+input[type='datetime-local'] {
     border: none;
     outline: none;
     color: #fff;
@@ -154,7 +137,7 @@ select {
     font-size: 20px;
     padding: 6px;
     border-radius: 8px;
-    margin-bottom: 12px;
+    margin-bottom: 40px;
     transition: 0.4s;
 
     &:focus {
@@ -162,7 +145,12 @@ select {
     }
 }
 
-
+input[type='checkbox'] {
+    border: none;
+    outline: none;
+    color: #fff;
+    background-color: #496583;
+}
 
 button {
     background-color: #42b883;

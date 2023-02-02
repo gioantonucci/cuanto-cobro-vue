@@ -4,9 +4,6 @@
       <h1 class="title">Cuánto cobras hoy?</h1>
       <form class="form" @submit.prevent>
         <div>
-          <label for="enMano">Cuánto cobraste en mano?</label>
-          <input v-model="enMano" ref="enMano.value" type="number" id="enMano">
-
           <label for="horas">Cuántas horas laburaste?</label>
           <input v-model="horas" ref="horas.value" type="number" id="horas">
 
@@ -30,7 +27,6 @@ export default {
 
   setup() {
     let horas = ref('')
-    let enMano = ref('')
     let extras = ref('')
     let nocturnas = ref('')
 
@@ -38,7 +34,7 @@ export default {
       const montoNormal = 668.44;
       const montoFeriado = montoNormal * 2;
       const montoNocturnas = montoNormal * 1.08;
-      let totalHoras = (enMano.value ? enMano.value : 0) + (montoNormal * horas.value) + (montoFeriado * extras.value) + (montoNocturnas * nocturnas.value)
+      let totalHoras = (montoNormal * horas.value) + (montoFeriado * extras.value) + (montoNocturnas * nocturnas.value)
 
 
       totalHoras > 5000 ? Swal.fire({
@@ -61,7 +57,6 @@ export default {
     return {
       montoHoras,
       horas,
-      enMano,
       extras,
       nocturnas
     }
@@ -91,6 +86,7 @@ h1 {
 .form div {
   display: flex;
   flex-direction: column;
+  margin-top: 10px;
 }
 label {
   color: #fff;

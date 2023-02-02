@@ -46,5 +46,6 @@ h2 {
 
 img {
     height: 296px;
+    margin-top: 32px;
 }
 </style>
