@@ -43,7 +43,7 @@ export default {
             let horasTotales = horaEntrada + horasTrabajadas;
 
             console.log(feriado.value)
-            
+
             function range(start, stop) {
                 let totales = [];
                 for (let i = start; i < (stop + 1); i++) {
@@ -56,13 +56,19 @@ export default {
             for (let i = 0; i < arrHoras.length; i++) {
                 if (arrHoras[i] < 22) {
                     pagoTotal = pagoTotal + montoNormal
-                    start.weekdayLong == 'domingo' || feriado.value  == true ? pagoTotal * 2 : pagoTotal
+                    if (start.weekdayLong == 'domingo' || feriado.value == true) {
+                        pagoTotal * 2
+                    } else
+                        pagoTotal
                 } else if
                     (arrHoras[i] >= 22 || arrHoras[i] <= 40) {
                     pagoTotal = pagoTotal + montoNocturnas
-                    end.weekdayLong == 'domingo' || feriado.value == true ? pagoTotal * 2 : pagoTotal
-                }
-            } console.log(pagoTotal);
+                    if (end.weekdayLong == 'domingo') {
+                        pagoTotal * 2
+                    } else
+                        pagoTotal
+                } return pagoTotal
+            }
 
             pagoTotal > 5000 ? Swal.fire({
                 title: `COBRAS $${pagoTotal.toFixed(2)}`,

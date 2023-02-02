@@ -12,6 +12,7 @@
 
           <label for="extras">Y horas extras?</label>
           <input v-model="extras" ref="extras.value" type="number" id="extras">
+        
         </div>
         <button @click="montoHoras()">Calcular</button>
       </form>
