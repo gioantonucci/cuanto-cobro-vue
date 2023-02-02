@@ -37,12 +37,9 @@ export default {
             let end = DateTime.fromISO(salida.value);
             let diffInHours = end.diff(start, 'hours');
             let horasTrabajadas = diffInHours.values.hours
-            console.log('horas', horasTrabajadas);
 
             let horaEntrada = start.c.hour;
             let horasTotales = horaEntrada + horasTrabajadas;
-
-            console.log(feriado.value)
 
             function range(start, stop) {
                 let totales = [];
@@ -52,6 +49,7 @@ export default {
                 return totales;
             }
             let pagoTotal = 0
+
             let arrHoras = range(horaEntrada, horasTotales)
             for (let i = 0; i < arrHoras.length; i++) {
                 if (arrHoras[i] < 22) {
@@ -67,7 +65,7 @@ export default {
                         pagoTotal * 2
                     } else
                         pagoTotal
-                } return pagoTotal
+                }
             }
 
             pagoTotal > 5000 ? Swal.fire({
