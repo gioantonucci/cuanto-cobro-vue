@@ -54,15 +54,15 @@ export default {
             let pagoTotal = 0
             //creo un array con la cantidad de horas trabajadas a partir del ingreso
             let arrHoras = range(horaEntrada, horasTotales)
-            console.log(horasTrabajadas)
-            console.log(arrHoras)
-            console.log(arrHoras.length - 1)
+           
             /**
              * Teniendo en cuenta que de 22 a 6 am se computan horas nocturnas, recorro el array
              * de horas trabajadas. Como no se puede pasar de 24 a 00, tomé el 25 como 00 y continué el bucle.
              * Si la hora es menor que 22 o mayor que 30 (explicado abajo), se suma una hora normal.
-             * Si la hora es mayor o igual que 22 y menor o igual que 29, se paga nocturna.
-             * (Usé 29 porque contando desde 22 a 29, 29 equivale a las 5 am que es la última hora que se paga nocturna)
+             * Si es domingo, se duplica por hora extra.
+             * Si la hora es mayor o igual que 22 y menor o igual que 25, se paga nocturna.
+             * Si es domingo, se duplica por hora extra.
+             * (Usé 25 porque contando desde 22 a 25, 25 equivale a las 00 am que es la última hora del día, es un paso extra para corroborar si el otro dia es domingo o feriado.)
              * 
              */
             for (let i = 0; i < arrHoras.length-1 ; i++) {
@@ -73,19 +73,19 @@ export default {
                         pagoTotal = pagoTotal + montoNormal
                 } else if
                     (arrHoras[i] >= 22 && arrHoras[i] <= 25) {
-                    if (start.weekdayLong == 'domingo') {
+                    if (start.weekdayLong == 'domingo'|| feriado.value == true) {
                         pagoTotal = pagoTotal + (montoNocturnas * 2)
                     } else
                         pagoTotal = pagoTotal + montoNocturnas
                 } else if 
                     (arrHoras[i] < 25 && arrHoras[i] > 29) {
-                    if (end.weekdayLong == 'domingo') {
+                    if (end.weekdayLong == 'domingo'|| feriado.value == true) {
                         pagoTotal = pagoTotal + (montoNocturnas * 2)
                     } else
                         pagoTotal = pagoTotal + montoNocturnas
                 }
             }
-
+            //configuración de alarmas
             pagoTotal > 5000 ? Swal.fire({
                 title: `COBRAS $${pagoTotal.toFixed(2)}`,
                 imageUrl: 'https://i.ytimg.com/vi/_Qn36DvJpa8/maxresdefault.jpg',
