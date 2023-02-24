@@ -3,7 +3,7 @@
         <div class="form-container">
             <h1 class="title">Cuánto cobras hoy?</h1>
             <h2> Acá va a ir el editor de variables.</h2>
-            <img src="https://pbs.twimg.com/media/DfIibtvXkAAnWur?format=jpg&name=small" />
+            <img alt="variablesn't" src="https://pbs.twimg.com/media/DfIibtvXkAAnWur?format=jpg&name=small" />
         </div>
     </div>
 </template>

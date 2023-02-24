@@ -27,10 +27,10 @@ nav {
 
   a {
     font-weight: bold;
-    color: #496583;
+    color: #85b4e6;
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: #3abb81;
     }
   }
 }
